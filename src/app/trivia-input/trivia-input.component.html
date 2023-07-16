@@ -1,0 +1,13 @@
+<form #triviaForm="ngForm" (ngSubmit)="createTrivia()">
+  <div class="input-container">
+    <select id="categorySelect" class="input-style" name="category" [(ngModel)]="selectedCategory" required>
+      <option value="">Select a category</option>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+    <select id="difficultySelect" class="input-style" name="difficulty" [(ngModel)]="selectedDifficulty" [disabled]="!selectedCategory" required>
+      <option value="">Select a difficulty</option>
+      <option *ngFor="let option of difficultyOptions" [value]="option">{{ option | titlecase }}</option>
+    </select>
+    <button id="createBtn" class="custom-button" [disabled]="!triviaForm.valid">Create</button>
+  </div>
+</form>
