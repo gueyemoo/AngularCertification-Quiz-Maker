@@ -1,8 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { TriviaService } from '../common/services/trivia.service';
 import { Subject, takeUntil } from 'rxjs';
 import { difficultyOptions } from '../common/helpers/utils';
 import { Category } from '../common/models/trivia-input.model';
+import { TriviaQuizComponent } from './trivia-quiz/trivia-quiz.component';
 
 @Component({
   selector: 'app-trivia-input',
@@ -10,6 +11,8 @@ import { Category } from '../common/models/trivia-input.model';
   styleUrls: ['./trivia-input.component.scss'],
 })
 export class TriviaInputComponent implements OnDestroy {
+  @ViewChild(TriviaQuizComponent) triviaQuiz: TriviaQuizComponent;
+
   public categories: Category[] = [];
   public selectedCategory: number;
   public selectedDifficulty: string;
@@ -36,8 +39,7 @@ export class TriviaInputComponent implements OnDestroy {
   }
 
   createTrivia() {
-    console.log('Selected Category:', this.selectedCategory);
-    console.log('Selected Difficulty:', this.selectedDifficulty);
+    this.triviaQuiz?.initQuiz(this.selectedCategory, this.selectedDifficulty);
   }
 
   ngOnDestroy() {
