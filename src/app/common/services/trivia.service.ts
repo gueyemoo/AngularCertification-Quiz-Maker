@@ -3,7 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { CategoriesResponse } from '../models/trivia-input.model';
 import { QuizQuestion } from '../models/trivia-quiz.model';
-import { AMOUNT_OF_QUESTIONS, QUESTION_TYPE } from '../helpers/utils';
+import {
+  AMOUNT_OF_QUESTIONS,
+  QUESTION_TYPE,
+  shuffleArray,
+} from '../helpers/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +31,16 @@ export class TriviaService {
     const req_url = `${this.apiUrl}/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`;
     return this.http
       .get<{ results: QuizQuestion[] }>(req_url)
-      .pipe(map((res) => res.results));
+      .pipe(map((res) => this.shuffleOptions(res.results)));
+  }
+
+  shuffleOptions(questions: QuizQuestion[]): QuizQuestion[] {
+    return questions.map((question) => ({
+      ...question,
+      options: shuffleArray([
+        ...question.incorrect_answers,
+        question.correct_answer,
+      ]),
+    }));
   }
 }

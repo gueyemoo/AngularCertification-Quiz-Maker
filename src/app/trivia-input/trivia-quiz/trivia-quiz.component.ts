@@ -39,20 +39,10 @@ export class TriviaQuizComponent implements OnInit, OnDestroy {
     this.triviaService
       .getQuizQuestions(category, difficulty)
       .pipe(takeUntil(this._destroyed$))
-      .subscribe((response) => {
-        this.questions = response.map((question) => ({
-          ...question,
-          options: this.shuffleOptions([
-            ...question.incorrect_answers,
-            question.correct_answer,
-          ]),
-        }));
+      .subscribe((questions) => {
+        this.questions = questions;
         this.loading = false;
       });
-  }
-
-  shuffleOptions(options: string[]): string[] {
-    return options.sort(() => Math.random() - 0.5);
   }
 
   selectAnswer(questionIndex: number, optionIndex: number) {
