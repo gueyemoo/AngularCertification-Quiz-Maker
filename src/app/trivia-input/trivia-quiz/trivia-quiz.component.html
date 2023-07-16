@@ -1,0 +1,19 @@
+<app-spinner [isLoading]="loading"></app-spinner>
+
+<div class="quiz-container" *ngIf="questions">
+  <div *ngFor="let question of questions; let i = index">
+    <h3>Question {{ i + 1 }}:</h3>
+    <p>{{ question.question }}</p>
+
+    <div class="answer-container">
+      <button *ngFor="let option of question.options; let j = index" class="answer-button" (click)="selectAnswer(i, j)"
+        [ngClass]="{ selected: userAnswers[i] === option }">
+        {{ option }}
+      </button>
+    </div>
+  </div>
+
+  <button class="submit-button" *ngIf="showSubmit" (click)="submitQuiz()">
+    Submit
+  </button>
+</div>
