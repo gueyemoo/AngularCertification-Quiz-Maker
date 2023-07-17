@@ -17,6 +17,7 @@ export class TriviaInputComponent implements OnDestroy {
   public selectedCategory: number;
   public selectedDifficulty: string;
   public difficultyOptions: string[] = difficultyOptions;
+  public isDropdownLoading: boolean = true;
 
   private _destroyed$: Subject<void> = new Subject<void>();
 
@@ -35,6 +36,7 @@ export class TriviaInputComponent implements OnDestroy {
       .pipe(takeUntil(this._destroyed$))
       .subscribe((res) => {
         this.categories = res.trivia_categories;
+        this.isDropdownLoading = false;
       });
   }
 

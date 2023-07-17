@@ -1,7 +1,7 @@
 <app-spinner [isLoading]="loading"></app-spinner>
 
-<div class="quiz-container" *ngIf="questions">
-  <div *ngFor="let question of questions; let i = index">
+<div class="container" *ngIf="questions">
+  <div *ngFor="let question of questions; let i = index" class="question">
     <h3>Question {{ i + 1 }}:</h3>
     <p>{{ question.question }}</p>
 

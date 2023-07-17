@@ -1,5 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+
+    .question {
+        margin-bottom: 1rem;
+    }
+}
+
+.answer-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
 .custom-button {
     background-color: #007bff;
     color: #fff;

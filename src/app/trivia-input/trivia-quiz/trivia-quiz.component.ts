@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TriviaService } from 'src/app/common/services/trivia.service';
@@ -16,7 +17,7 @@ export class TriviaQuizComponent implements OnInit, OnDestroy {
 
   private _destroyed$: Subject<void> = new Subject<void>();
 
-  constructor(private triviaService: TriviaService) {}
+  constructor(private triviaService: TriviaService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -60,6 +61,8 @@ export class TriviaQuizComponent implements OnInit, OnDestroy {
 
   submitQuiz() {
     // Handle submitting the quiz
+    this.triviaService.setQuizData(this.questions, this.userAnswers);
+    this.router.navigateByUrl('/results');
   }
 
   ngOnDestroy() {
