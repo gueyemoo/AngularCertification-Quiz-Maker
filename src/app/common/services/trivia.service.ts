@@ -14,6 +14,9 @@ import {
 })
 export class TriviaService {
   private apiUrl = 'https://opentdb.com';
+  private quizQuestions: QuizQuestion[] = [];
+  private userAnswers: string[] = [];
+
   constructor(private http: HttpClient) {}
 
   getCategories(): Observable<CategoriesResponse> {
@@ -42,5 +45,17 @@ export class TriviaService {
         question.correct_answer,
       ]),
     }));
+  }
+
+  setQuizData(questions: QuizQuestion[], answers: string[]): void {
+    this.quizQuestions = questions;
+    this.userAnswers = answers;
+  }
+  getStoredQuizQuestions(): QuizQuestion[] {
+    return this.quizQuestions;
+  }
+
+  getQuizUserAnswers(): string[] {
+    return this.userAnswers;
   }
 }
