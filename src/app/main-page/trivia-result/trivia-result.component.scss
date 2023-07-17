@@ -1,0 +1,37 @@
+.score {
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.correction-button {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    cursor: default;
+}
+
+.correction-button.correct {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.correction-button.wrong {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.correction-button.correct.selected {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.correction-button.wrong.selected {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.correction-button.correct-highlight {
+    background-color: #28a745;
+    color: #fff;
+}

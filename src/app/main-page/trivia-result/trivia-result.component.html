@@ -1,0 +1,30 @@
+<app-data-not-found *ngIf="!storedQuestions.length || !userAnswers.length"></app-data-not-found>
+
+<div class="container" *ngIf="storedQuestions && userAnswers">
+    <h2>Quiz Results</h2>
+    <div *ngFor="let question of storedQuestions; let i = index" class="question">
+        <h3>Question {{ i + 1 }}:</h3>
+        <p>{{ question.question }}</p>
+        <div class="answer-container">
+            <div *ngFor="let option of question.options">
+                <button class="correction-button" [ngClass]="{
+            'selected correct': checkAnswer(question, option) && userAnswers[i] === option,
+            'selected wrong': !checkAnswer(question, option) && userAnswers[i] === option,
+            'correct': checkAnswer(question, option) && userAnswers[i] !== option,
+            'correct-highlight': checkAnswer(question, option)
+          }" [disabled]="true">
+                    {{ option }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="score" [ngStyle]="{ 'background': getScoreColor() }">
+        <span [style.color]="getTextColor()">
+            You scored {{ getScore() }} out of {{ storedQuestions.length }}
+        </span>
+    </div>
+
+    <button class="submit-button" (click)="redirectToQuizCreation()">Create New Quiz</button>
+
+</div>
