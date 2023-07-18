@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'results',
     component: TriviaResultComponent,
   },
+  {
+    path: '**',
+    component: MainPageComponent,
+  },
 ];
 
 @NgModule({
