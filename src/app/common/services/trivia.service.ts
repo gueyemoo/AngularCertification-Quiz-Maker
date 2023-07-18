@@ -19,12 +19,12 @@ export class TriviaService {
 
   constructor(private http: HttpClient) {}
 
-  getCategories(): Observable<CategoriesResponse> {
+  public getCategories(): Observable<CategoriesResponse> {
     const categoriesUrl = `${this.apiUrl}/api_category.php`;
     return this.http.get<CategoriesResponse>(categoriesUrl);
   }
 
-  getQuizQuestions(
+  public getQuizQuestions(
     category: number,
     difficulty: string
   ): Observable<QuizQuestion[]> {
@@ -37,7 +37,7 @@ export class TriviaService {
       .pipe(map((res) => this.shuffleOptions(res.results)));
   }
 
-  shuffleOptions(questions: QuizQuestion[]): QuizQuestion[] {
+  private shuffleOptions(questions: QuizQuestion[]): QuizQuestion[] {
     return questions.map((question) => ({
       ...question,
       options: shuffleArray([
@@ -47,15 +47,15 @@ export class TriviaService {
     }));
   }
 
-  setQuizData(questions: QuizQuestion[], answers: string[]): void {
+  public setQuizData(questions: QuizQuestion[], answers: string[]): void {
     this.quizQuestions = questions;
     this.userAnswers = answers;
   }
-  getStoredQuizQuestions(): QuizQuestion[] {
+  public getStoredQuizQuestions(): QuizQuestion[] {
     return this.quizQuestions;
   }
 
-  getQuizUserAnswers(): string[] {
+  public getQuizUserAnswers(): string[] {
     return this.userAnswers;
   }
 }

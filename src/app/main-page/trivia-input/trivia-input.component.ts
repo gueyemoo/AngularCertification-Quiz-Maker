@@ -1,8 +1,8 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { TriviaService } from '../common/services/trivia.service';
+import { TriviaService } from '../../common/services/trivia.service';
 import { Subject, takeUntil } from 'rxjs';
-import { difficultyOptions } from '../common/helpers/utils';
-import { Category } from '../common/models/trivia-input.model';
+import { difficultyOptions } from '../../common/helpers/utils';
+import { Category } from '../../common/models/trivia-input.model';
 import { TriviaQuizComponent } from './trivia-quiz/trivia-quiz.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class TriviaInputComponent implements OnDestroy {
   /**
    * @description Retrieve the categories from the API
    */
-  getCategories() {
+  public getCategories(): void {
     this.triviaService
       .getCategories()
       .pipe(takeUntil(this._destroyed$))
@@ -40,7 +40,7 @@ export class TriviaInputComponent implements OnDestroy {
       });
   }
 
-  createTrivia() {
+  public createTrivia(): void {
     this.triviaQuiz?.initQuiz(this.selectedCategory, this.selectedDifficulty);
   }
 

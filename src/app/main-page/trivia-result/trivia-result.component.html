@@ -1,6 +1,6 @@
 <app-data-not-found *ngIf="!storedQuestions.length || !userAnswers.length"></app-data-not-found>
 
-<div class="container" *ngIf="storedQuestions && userAnswers">
+<div class="container" *ngIf="storedQuestions.length && userAnswers.length">
     <h2>Quiz Results</h2>
     <div *ngFor="let question of storedQuestions; let i = index" class="question">
         <h3>Question {{ i + 1 }}:</h3>

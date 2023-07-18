@@ -21,17 +21,11 @@ export class TriviaResultComponent implements OnInit {
     console.log(this.userAnswers);
   }
 
-  isCorrectAnswer(index: number): boolean {
-    return (
-      this.userAnswers[index] === this.storedQuestions[index].correct_answer
-    );
-  }
-
-  checkAnswer(question: QuizQuestion, answer: string): boolean {
+  public checkAnswer(question: QuizQuestion, answer: string): boolean {
     return question.correct_answer === answer;
   }
 
-  getScore(): number {
+  public getScore(): number {
     let score = 0;
     for (let i = 0; i < this.storedQuestions.length; i++) {
       if (this.checkAnswer(this.storedQuestions[i], this.userAnswers[i])) {
@@ -41,7 +35,7 @@ export class TriviaResultComponent implements OnInit {
     return score;
   }
 
-  getScoreColor(): string {
+  public getScoreColor(): string {
     const score = this.getScore();
     if (score <= 1) {
       return 'red';
@@ -52,7 +46,7 @@ export class TriviaResultComponent implements OnInit {
     }
   }
 
-  getTextColor(): string {
+  public getTextColor(): string {
     const scoreColor = this.getScoreColor();
     if (scoreColor === 'red') {
       return 'white';
@@ -65,7 +59,7 @@ export class TriviaResultComponent implements OnInit {
     }
   }
 
-  redirectToQuizCreation(): void {
+  public redirectToQuizCreation(): void {
     // Redirect to the home screen
     this.router.navigate(['/']);
   }

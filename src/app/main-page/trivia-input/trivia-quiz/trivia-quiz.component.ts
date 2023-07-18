@@ -40,8 +40,9 @@ export class TriviaQuizComponent implements OnInit, OnDestroy {
     this.triviaService
       .getQuizQuestions(category, difficulty)
       .pipe(takeUntil(this._destroyed$))
-      .subscribe((questions) => {
+      .subscribe((questions: QuizQuestion[]) => {
         this.questions = questions;
+        //!I SHOULD SHUFFLE HERE THE OPTIONS AND NOT IN THE SERVICE BUT I CAN LEAVE THE BUILD OF THE OPTIONS PROPERTY FOR THE SERVICE.
         this.loading = false;
       });
   }
