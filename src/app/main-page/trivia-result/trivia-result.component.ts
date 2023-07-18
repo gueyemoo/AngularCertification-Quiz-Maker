@@ -39,24 +39,19 @@ export class TriviaResultComponent implements OnInit {
     const score = this.getScore();
     if (score <= 1) {
       return 'red';
-    } else if (score <= 3) {
-      return 'yellow';
-    } else {
-      return 'green';
     }
+    if (score <= 3) {
+      return 'yellow';
+    }
+    return 'green';
   }
 
   public getTextColor(): string {
     const scoreColor = this.getScoreColor();
-    if (scoreColor === 'red') {
+    if (scoreColor === 'red' || scoreColor === 'green') {
       return 'white';
-    } else if (scoreColor === 'yellow') {
-      return 'black';
-    } else if (scoreColor === 'green') {
-      return 'white';
-    } else {
-      return 'black';
     }
+    return 'black';
   }
 
   public redirectToQuizCreation(): void {
