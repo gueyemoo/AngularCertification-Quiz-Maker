@@ -22,19 +22,31 @@ export class TriviaQuizComponent implements OnChanges, OnDestroy {
 
   constructor(private triviaService: TriviaService, private router: Router) {}
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     if (this.category && this.difficulty) {
-      this.initQuiz();
+      this.initQuiz(this.category, this.difficulty);
     }
   }
 
-  initQuiz() {
+  /**
+   * @description initialise the trivia by resetting the data and getting the trivia data based on parameters
+   * @param category: the category of the trivia quiz
+   * @param difficulty: the difficulty of the trivia
+   */
+  private initQuiz(category: number, difficulty: string): void {
     this.loading = true;
-    // Generate a new quiz by resetting the questions and userAnswers and hide submit button
+
+    this.resetTriviaQuiz();
+    this.getQuizQuestions(category, difficulty);
+  }
+
+  /**
+   * @description reset quiz data
+   */
+  private resetTriviaQuiz(): void {
     this.questions = [];
     this.userAnswers = [];
     this.showSubmit = false;
-    this.getQuizQuestions(this.category, this.difficulty);
   }
 
   /**
@@ -42,7 +54,7 @@ export class TriviaQuizComponent implements OnChanges, OnDestroy {
    * @param category
    * @param difficulty
    */
-  private getQuizQuestions(category: number, difficulty: string) {
+  private getQuizQuestions(category: number, difficulty: string): void {
     this.triviaService
       .getQuizQuestions(category, difficulty)
       .pipe(takeUntil(this._destroyed$))
@@ -53,25 +65,41 @@ export class TriviaQuizComponent implements OnChanges, OnDestroy {
       });
   }
 
-  selectAnswer(questionIndex: number, optionIndex: number) {
+  /**
+   * @description retrieve the selected option by the user
+   * @param questionIndex: number of the question answered
+   * @param optionIndex: position of the options answered
+   */
+  public selectAnswer(questionIndex: number, optionIndex: number): void {
     const selectedOption = this.questions[questionIndex].options[optionIndex];
     this.userAnswers[questionIndex] =
       this.userAnswers[questionIndex] === selectedOption ? '' : selectedOption;
     this.allQuestionsAnswered();
   }
 
-  allQuestionsAnswered(): void {
+  /**
+   * @description Check if all the questions are answered by the user
+   */
+  private allQuestionsAnswered(): void {
     this.showSubmit =
       this.userAnswers.filter((answer) => answer !== '').length ===
       this.questions.length;
   }
 
-  submitQuiz() {
+  /**
+   * @description triggered on click of submit when all questions are answered
+   * store answers and questions in trivia service
+   * send user to results page
+   */
+  public submitQuiz(): void {
     this.triviaService.setQuizData(this.questions, this.userAnswers);
     this.router.navigateByUrl('/results');
   }
 
-  ngOnDestroy() {
+  /**
+   * @description Unsubscribe to prevent any memory leak
+   */
+  ngOnDestroy(): void {
     this._destroyed$.next();
     this._destroyed$.complete();
   }

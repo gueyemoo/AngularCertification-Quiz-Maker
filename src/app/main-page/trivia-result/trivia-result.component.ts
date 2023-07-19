@@ -17,14 +17,20 @@ export class TriviaResultComponent implements OnInit {
   ngOnInit(): void {
     this.storedQuestions = this.triviaService.getStoredQuizQuestions();
     this.userAnswers = this.triviaService.getQuizUserAnswers();
-    console.log(this.storedQuestions);
-    console.log(this.userAnswers);
   }
 
+  /**
+   * @description Return a boolean based on if the user answer is the correct answer
+   * @param question the questions informations (contain the correct answer)
+   * @param answer the user answer
+   */
   public checkAnswer(question: QuizQuestion, answer: string): boolean {
     return question.correct_answer === answer;
   }
 
+  /**
+   * @description Return the score of the user based on the number of correct answer
+   */
   public getScore(): number {
     let score = 0;
     for (let i = 0; i < this.storedQuestions.length; i++) {
@@ -35,6 +41,9 @@ export class TriviaResultComponent implements OnInit {
     return score;
   }
 
+  /**
+   * @description Return the background color based on the score of user
+   */
   public getScoreColor(): string {
     const score = this.getScore();
     if (score <= 1) {
@@ -46,6 +55,9 @@ export class TriviaResultComponent implements OnInit {
     return 'green';
   }
 
+  /**
+   * @description Return the text color based on the score of user
+   */
   public getTextColor(): string {
     const scoreColor = this.getScoreColor();
     if (scoreColor === 'red' || scoreColor === 'green') {
@@ -54,6 +66,9 @@ export class TriviaResultComponent implements OnInit {
     return 'black';
   }
 
+  /**
+   * @description Redirect to the main component
+   */
   public redirectToQuizCreation(): void {
     // Redirect to the home screen
     this.router.navigate(['/']);

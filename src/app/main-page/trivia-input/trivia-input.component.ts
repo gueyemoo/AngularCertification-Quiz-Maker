@@ -26,7 +26,7 @@ export class TriviaInputComponent implements OnDestroy {
 
   constructor(private triviaService: TriviaService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCategories();
   }
 
@@ -43,7 +43,10 @@ export class TriviaInputComponent implements OnDestroy {
       });
   }
 
-  onCreateTrivia(): void {
+  /**
+   * @description Send values to parent component on create button click
+   */
+  public onCreateTrivia(): void {
     this.createTrivia.emit({
       category: this.selectedCategory,
       difficulty: this.selectedDifficulty,
@@ -51,6 +54,9 @@ export class TriviaInputComponent implements OnDestroy {
     });
   }
 
+  /**
+   * @description Unsubscribe to prevent any memory leak
+   */
   ngOnDestroy() {
     this._destroyed$.next();
     this._destroyed$.complete();

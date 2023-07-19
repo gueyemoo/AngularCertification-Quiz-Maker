@@ -14,6 +14,10 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /**
+   * @description Store data received from input component to send it to the quiz component
+   * @param eventData {category, difficulty, isTriviaStarted} received from input component
+   */
   onCreateTrivia(eventData: {
     category: number;
     difficulty: string;
