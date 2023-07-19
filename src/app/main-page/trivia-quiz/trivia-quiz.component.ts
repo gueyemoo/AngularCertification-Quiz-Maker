@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { TriviaService } from 'src/app/common/services/trivia.service';
 import { QuizQuestion } from 'src/app/common/models/trivia-quiz.model';
+import { shuffleArray } from 'src/app/common/helpers/utils';
 
 @Component({
   selector: 'app-trivia-quiz',
@@ -60,9 +61,19 @@ export class TriviaQuizComponent implements OnChanges, OnDestroy {
       .pipe(takeUntil(this._destroyed$))
       .subscribe((questions: QuizQuestion[]) => {
         this.questions = questions;
-        //!I SHOULD SHUFFLE HERE THE OPTIONS AND NOT IN THE SERVICE BUT I CAN LEAVE THE BUILD OF THE OPTIONS PROPERTY FOR THE SERVICE.
+        this.shuffleOptions(this.questions);
         this.loading = false;
       });
+  }
+
+  /**
+   * @description Shuffle the options(answers) orders of each questions
+   * @param questions array of questions data
+   */
+  private shuffleOptions(questions: QuizQuestion[]): void {
+    questions.forEach((question: QuizQuestion) =>
+      shuffleArray(question.options)
+    );
   }
 
   /**

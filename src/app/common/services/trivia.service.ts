@@ -34,17 +34,17 @@ export class TriviaService {
     const req_url = `${this.apiUrl}/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`;
     return this.http
       .get<{ results: QuizQuestion[] }>(req_url)
-      .pipe(map((res) => this.shuffleOptions(res.results)));
+      .pipe(map((res) => this.buildOptionsProperty(res.results)));
   }
 
-  private shuffleOptions(questions: QuizQuestion[]): QuizQuestion[] {
-    //! SHOULD CREATE A FUNCTION TO BUILD OPTIONS PROPERTY AND SEPERATED ONE FOR SHUFFLE
+  /**
+   * @description build a new property "options" with all the answers of a question
+   * @param questions an array of questions data
+   */
+  private buildOptionsProperty(questions: QuizQuestion[]): QuizQuestion[] {
     return questions.map((question) => ({
       ...question,
-      options: shuffleArray([
-        ...question.incorrect_answers,
-        question.correct_answer,
-      ]),
+      options: [...question.incorrect_answers, question.correct_answer],
     }));
   }
 
