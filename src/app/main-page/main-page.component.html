@@ -1,4 +1,6 @@
 <div class="container">
     <h1>Welcome to Quiz Maker</h1>
-    <app-trivia-input></app-trivia-input>
+    <app-trivia-input (createTrivia)="onCreateTrivia($event)"></app-trivia-input>
+    <app-trivia-quiz *ngIf="isTriviaStarted" [category]="selectedCategory"
+        [difficulty]="selectedDifficulty"></app-trivia-quiz>
 </div>

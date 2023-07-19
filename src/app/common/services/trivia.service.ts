@@ -38,6 +38,7 @@ export class TriviaService {
   }
 
   private shuffleOptions(questions: QuizQuestion[]): QuizQuestion[] {
+    //! SHOULD CREATE A FUNCTION TO BUILD OPTIONS PROPERTY AND SEPERATED ONE FOR SHUFFLE
     return questions.map((question) => ({
       ...question,
       options: shuffleArray([

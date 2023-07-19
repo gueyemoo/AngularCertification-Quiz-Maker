@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 import { TriviaService } from 'src/app/common/services/trivia.service';
 import { QuizQuestion } from 'src/app/common/models/trivia-quiz.model';
 
@@ -9,7 +9,10 @@ import { QuizQuestion } from 'src/app/common/models/trivia-quiz.model';
   templateUrl: './trivia-quiz.component.html',
   styleUrls: ['./trivia-quiz.component.scss'],
 })
-export class TriviaQuizComponent implements OnInit, OnDestroy {
+export class TriviaQuizComponent implements OnChanges, OnDestroy {
+  @Input() category: number;
+  @Input() difficulty: string;
+
   public questions: QuizQuestion[];
   public userAnswers: string[] = [];
   public showSubmit: boolean = false;
@@ -19,16 +22,19 @@ export class TriviaQuizComponent implements OnInit, OnDestroy {
 
   constructor(private triviaService: TriviaService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnChanges() {
+    if (this.category && this.difficulty) {
+      this.initQuiz();
+    }
+  }
 
-  initQuiz(category: number, difficulty: string) {
+  initQuiz() {
     this.loading = true;
     // Generate a new quiz by resetting the questions and userAnswers and hide submit button
     this.questions = [];
     this.userAnswers = [];
     this.showSubmit = false;
-
-    this.getQuizQuestions(category, difficulty);
+    this.getQuizQuestions(this.category, this.difficulty);
   }
 
   /**
@@ -61,7 +67,6 @@ export class TriviaQuizComponent implements OnInit, OnDestroy {
   }
 
   submitQuiz() {
-    // Handle submitting the quiz
     this.triviaService.setQuizData(this.questions, this.userAnswers);
     this.router.navigateByUrl('/results');
   }

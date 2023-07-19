@@ -6,7 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit {
+  public selectedCategory: number;
+  public selectedDifficulty: string;
+  public isTriviaStarted: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  onCreateTrivia(eventData: {
+    category: number;
+    difficulty: string;
+    isTriviaStarted: boolean;
+  }): void {
+    this.selectedCategory = eventData.category;
+    this.selectedDifficulty = eventData.difficulty;
+    this.isTriviaStarted = eventData.isTriviaStarted;
+  }
 }
