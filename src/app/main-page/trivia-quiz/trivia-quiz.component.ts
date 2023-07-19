@@ -77,7 +77,7 @@ export class TriviaQuizComponent implements OnChanges, OnDestroy {
   }
 
   /**
-   * @description retrieve the selected option by the user
+   * @description retrieve the selected option by the user or if already selected unselect it
    * @param questionIndex: number of the question answered
    * @param optionIndex: position of the options answered
    */
