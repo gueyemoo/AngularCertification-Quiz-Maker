@@ -8,7 +8,6 @@
         <div class="answer-container">
             <div *ngFor="let option of question.options">
                 <button class="correction-button" [ngClass]="{
-            'selected correct': checkAnswer(question, option) && userAnswers[i] === option,
             'selected wrong': !checkAnswer(question, option) && userAnswers[i] === option,
             'correct': checkAnswer(question, option) && userAnswers[i] !== option,
             'correct-highlight': checkAnswer(question, option)

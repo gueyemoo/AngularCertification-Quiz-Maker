@@ -3,11 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { CategoriesResponse } from '../models/trivia-input.model';
 import { QuizQuestion } from '../models/trivia-quiz.model';
-import {
-  AMOUNT_OF_QUESTIONS,
-  QUESTION_TYPE,
-  shuffleArray,
-} from '../helpers/utils';
+import { AMOUNT_OF_QUESTIONS, QUESTION_TYPE } from '../helpers/utils';
 
 @Injectable({
   providedIn: 'root',
