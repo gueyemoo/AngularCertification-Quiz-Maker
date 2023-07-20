@@ -3,7 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { CategoriesResponse } from '../models/trivia-input.model';
 import { QuizQuestion } from '../models/trivia-quiz.model';
-import { AMOUNT_OF_QUESTIONS, QUESTION_TYPE } from '../helpers/utils';
+import {
+  AMOUNT_OF_QUESTIONS,
+  QUESTION_TYPE,
+  decodeHtmlEntities,
+} from '../helpers/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +34,23 @@ export class TriviaService {
     const req_url = `${this.apiUrl}/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}`;
     return this.http
       .get<{ results: QuizQuestion[] }>(req_url)
-      .pipe(map((res) => this.buildOptionsProperty(res.results)));
+      .pipe(map((res) => this.sanitiseAndBuildOptions(res.results)));
+  }
+
+  /**
+   * @description format questions to take into account special characters
+   * @param questions questions data received from API
+   */
+  private sanitiseAndBuildOptions(questions: QuizQuestion[]): QuizQuestion[] {
+    const sanitisedEncodingQuestions = questions.map((question) => ({
+      ...question,
+      question: decodeHtmlEntities(question.question),
+      correct_answer: decodeHtmlEntities(question.correct_answer),
+      incorrect_answers: question.incorrect_answers.map((answer) =>
+        decodeHtmlEntities(answer)
+      ),
+    }));
+    return this.buildOptionsProperty(sanitisedEncodingQuestions);
   }
 
   /**
